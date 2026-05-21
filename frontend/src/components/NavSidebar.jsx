@@ -10,7 +10,9 @@ const links = [
   { to: '/reports', label: 'Reports' },
 ];
 
-export default function NavSidebar() {
+export default function NavSidebar({ auth, onLogout }) {
+  const user = auth?.user;
+
   return (
     <aside className="sidebar">
       <div className="brand">Construction Portal</div>
@@ -21,6 +23,17 @@ export default function NavSidebar() {
           </NavLink>
         ))}
       </nav>
+      <div className="login-status-card">
+        <div className="login-symbol" aria-hidden="true">
+          {(user?.name || user?.email || 'A').charAt(0).toUpperCase()}
+        </div>
+        <div>
+          <span>Signed in</span>
+          <strong>{user?.name || 'Admin User'}</strong>
+          <small>{user?.email || 'admin@example.com'}</small>
+        </div>
+        <button type="button" onClick={onLogout}>Logout</button>
+      </div>
     </aside>
   );
 }

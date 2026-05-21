@@ -41,6 +41,14 @@ export const clearAuth = () => {
   localStorage.removeItem(AUTH_STORAGE_KEY);
 };
 
+export const formatRupees = (value, options = {}) =>
+  new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0,
+    ...options,
+  }).format(Number(value) || 0);
+
 export const authLogin = (data) => client.post('/auth/login', data);
 export const fetchProjects = () => client.get('/projects');
 export const fetchProject = (id) => client.get(`/projects/${id}`);

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authLogin, storeAuth } from '../api.js';
 
-export default function LoginPage() {
+export default function LoginPage({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -15,6 +15,7 @@ export default function LoginPage() {
     try {
       const { data } = await authLogin({ email, password });
       storeAuth(data);
+      onLogin(data);
       navigate('/');
     } catch (err) {
       setError('Login failed. Check credentials.');
